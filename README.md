@@ -1,21 +1,15 @@
 # Build your own HTTP server (Python)
 https://app.codecrafters.io/courses/http-server/overview
 
-
-
 ---
 
 ### Start server
 
 `python -m app.main --directory files`
 
-
-
 ---
 
 ### Test manually with HTTPie 
-
-
 
 **Stage 2: Respond with 200**
 
@@ -23,16 +17,14 @@ https://app.codecrafters.io/courses/http-server/overview
 
 > HTTP/1.1 200 OK
 
-
-
+---
 **Stage 3: Respond with 404**
 
 `http localhost:4221/404`
 
 > HTTP/1.1 404 Not Found
 
-
-
+---
 **Stage 4: Respond with content**
 
 `http localhost:4221/echo/abc`
@@ -44,8 +36,7 @@ https://app.codecrafters.io/courses/http-server/overview
 >
 > abc
 
-
-
+---
 **Stage 5: Parse headers**
 
 `http localhost:4221/user-agent`
@@ -57,14 +48,12 @@ https://app.codecrafters.io/courses/http-server/overview
 >
 > HTTPie/3.2.2
 
-
-
+---
 **Stage 6: Concurrent connections**
 
 `nc localhost 4221`
 
-
-
+---
 **Stage 6: Get a file**
 
 `http localhost:4221/files/foo.txt`
@@ -75,8 +64,7 @@ https://app.codecrafters.io/courses/http-server/overview
 >
 > bar
 
-
-
+---
 **Stage 7: Post a file**
 
 `cat files/foo.txt | http POST localhost:4221/files/bar.txt`
