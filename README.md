@@ -5,7 +5,7 @@ https://app.codecrafters.io/courses/http-server/overview
 
 ---
 
-#### Start server
+### Start server
 
 `python -m app.main --directory files`
 
@@ -13,7 +13,7 @@ https://app.codecrafters.io/courses/http-server/overview
 
 ---
 
-#### Test manually with HTTPie 
+### Test manually with HTTPie 
 
 
 
