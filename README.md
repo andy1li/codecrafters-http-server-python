@@ -29,30 +29,27 @@ https://app.codecrafters.io/courses/http-server/overview
 
 `http localhost:4221/echo/abc`
 
-> http localhost:4221/
-> 
-> HTTP/1.1 200 OK
-> 
-> Content-Length: 3
-> 
-> Content-Type: text/plain
->
-> abc
+```
+http localhost:4221/
+HTTP/1.1 200 OK
+Content-Length: 3
+Content-Type: text/plain
+
+abc
+```
 
 ---
 **Stage 5: Parse headers**
 
 `http localhost:4221/user-agent`
 
-> http localhost:4221/user-agent
-> 
-> HTTP/1.1 200 OK
-> 
-> Content-Length: 12
-> 
-> Content-Type: text/plain
->
-> HTTPie/3.2.2
+```
+HTTP/1.1 200 OK
+Content-Length: 12
+Content-Type: text/plain
+
+HTTPie/3.2.2
+```
 
 ---
 **Stage 6: Concurrent connections**
@@ -64,13 +61,13 @@ https://app.codecrafters.io/courses/http-server/overview
 
 `http localhost:4221/files/foo.txt`
 
-> HTTP/1.1 200 OK
-> 
-> Content-Length: 3
-> 
-> Content-Type: application/octet-stream
->
-> bar
+```
+HTTP/1.1 200 OK
+Content-Length: 3
+Content-Type: application/octet-stream
+
+bar
+```
 
 ---
 **Stage 7: Post a file**
