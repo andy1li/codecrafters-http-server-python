@@ -30,8 +30,11 @@ https://app.codecrafters.io/courses/http-server/overview
 `http localhost:4221/echo/abc`
 
 > http localhost:4221/
+> 
 > HTTP/1.1 200 OK
+> 
 > Content-Length: 3
+> 
 > Content-Type: text/plain
 >
 > abc
@@ -42,8 +45,11 @@ https://app.codecrafters.io/courses/http-server/overview
 `http localhost:4221/user-agent`
 
 > http localhost:4221/user-agent
+> 
 > HTTP/1.1 200 OK
+> 
 > Content-Length: 12
+> 
 > Content-Type: text/plain
 >
 > HTTPie/3.2.2
@@ -59,7 +65,9 @@ https://app.codecrafters.io/courses/http-server/overview
 `http localhost:4221/files/foo.txt`
 
 > HTTP/1.1 200 OK
+> 
 > Content-Length: 3
+> 
 > Content-Type: application/octet-stream
 >
 > bar
