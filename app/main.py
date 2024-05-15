@@ -1,3 +1,4 @@
+import gzip
 import os
 import socket
 from argparse import ArgumentParser
@@ -42,8 +43,12 @@ def parse(data: bytes) -> dict:
     for header in headers:
         if not header: continue
         header_key, _, header_value = header.partition(': ')
-        request['headers'][header_key] = header_value
+        request['headers'][header_key.lower()] = header_value.lower()
 
+    if encoding := request['headers'].get('accept-encoding'):
+        if any(chunk == 'gzip' for chunk in encoding.split(', ')):
+            request['headers']['accept-encoding'] = 'gzip'
+    
     parser = ArgumentParser()
     parser.add_argument('--directory', type=str)
     args = parser.parse_args()
@@ -56,8 +61,11 @@ def route(request: dict) -> bytes:
     path = request['target']
     if request['method'] == 'GET':    
         if path == '/'               : return status_response(200)
-        if path == '/user-agent'     : return response(request['headers']['User-Agent'])
-        if path.startswith('/echo/') : return response(path.removeprefix('/echo/'))
+        if path == '/user-agent'     : return response(request['headers']['user-agent'])
+        if path.startswith('/echo/') : return response(
+            path.removeprefix('/echo/'), 
+            need_gzip = request['headers'].get('accept-encoding') == 'gzip'
+        )
         if path.startswith('/files/'): return file_response(request)
 
     if request['method'] == 'POST':
@@ -66,19 +74,22 @@ def route(request: dict) -> bytes:
     return status_response(404)
 
 
-def response(body: str, content_type = 'text/plain') -> bytes:
+def response(body: str, content_type='text/plain', need_gzip=False) -> bytes:
+    body = body.encode()
+    if need_gzip: body = gzip.compress(body)
     return (
         STATUS_CODE[200] + ENDL +
+        (b'Content-Encoding: gzip' + ENDL if need_gzip else b'') +
         b'Content-Type: ' + content_type.encode() + ENDL +
         b'Content-Length: ' + str(len(body)).encode() + ENDL * 2 +
-        body.encode()
+        body
     )
 
 def file_response(request) -> bytes:
     path = file_path(request)
     if os.path.isfile(path):
         with open(path, 'r') as file:
-            return response(file.read(), 'application/octet-stream')
+            return response(file.read(), content_type='application/octet-stream')
         
     return status_response(404)
 
