@@ -75,14 +75,14 @@ def route(request: dict) -> bytes:
 
 
 def response(body: str, content_type='text/plain', need_gzip=False) -> bytes:
-    body = body.encode()
-    if need_gzip: body = gzip.compress(body)
+    body_bytes = body.encode()
+    if need_gzip: body_bytes = gzip.compress(body_bytes)
     return (
         STATUS_CODE[200] + ENDL +
         (b'Content-Encoding: gzip' + ENDL if need_gzip else b'') +
         b'Content-Type: ' + content_type.encode() + ENDL +
-        b'Content-Length: ' + str(len(body)).encode() + ENDL * 2 +
-        body
+        b'Content-Length: ' + str(len(body_bytes)).encode() + ENDL * 2 +
+        body_bytes
     )
 
 def file_response(request) -> bytes:
